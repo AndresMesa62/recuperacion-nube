@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    <link rel="icon" href="https://salon-belleza-citas-bucket.s3.us-east-1.amazonaws.com/logo.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para los íconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Efecto hover personalizado */
+        .hover-shadow {
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suavidad de transición */
+        }
+
+        .hover-shadow:hover {
+            transform: translateY(-5px); /* Desplazamiento hacia arriba */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100" style="background-color: #f9f9f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #333;">
+
+    <!-- Header -->
+    <header style="background-color: #ffffff; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding: 10px 20px;">
+        <div class="logo" style="display: flex; align-items: center;">
+            <a href="./menu.html" style="display: flex; align-items: center; text-decoration: none;">
+                <img src="https://salon-belleza-citas-bucket.s3.us-east-1.amazonaws.com/logo.png" alt="Logo Salón de Belleza" style="width: 50px; height: auto; margin-right: 15px;">
+                <h1 style="font-size: 1.5rem; color: #333; margin: 0; font-weight: 500; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+                    Salón de Belleza las Cariñosas
+                </h1>
+            </a>
+        </div>
+    </header>
+    <div class="container">
+        <br>
+        <h6 id="welcome-message" class="mb-5" style="text-align: left;"></h6> <!-- Cambiaremos este texto dinámicamente -->
+    </div>
+        
+    <!-- Contenido principal -->
+    <main class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow border-0">
+                    <div class="card-body p-4">
+                        <h2 class="text-center mb-4" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 600; color: #333;">Agendar Cita</h2>
+                        <form id="form-cita">
+                            <div class="form-group mb-3">
+                                <label for="fecha" class="form-label" style="font-weight: 500;">Fecha y Hora</label>
+                                <input type="datetime-local" id="fecha" class="form-control" required style="border-radius: 10px; border: 1px solid #ddd;">
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg" style="background-color: #0071e3; border: none; border-radius: 10px;">
+                                    Agendar Cita
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        <div class="container mt-5">
+            <h2 class="text-center">Citas Agendadas</h2>
+            <div class="table-responsive">
+                <table id="tabla-citas" class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Correo</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las citas se cargarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        
+        
+        
+    </main>    
+    <!-- Footer -->
+    <footer style="background-color: #ffffff; padding: 20px; border-top: 1px solid rgba(0, 0, 0, 0.1); text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; color: #999;">
+        <p>© 2024 Colosal Software | Todos los derechos reservados | <a href="https://www.colosalsoftware.com" target="_blank" style="color: #333; text-decoration: none;">Visitar el Sitio Web</a></p>
+    </footer> 
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script src="se-03.js"></script>
+
+    <script src="crearCita-01.js"></script>
+    <script src="cargarCitas-01.js"></script>
+    <script src="actualizarCita-06.js"></script>
+
+    <script>
+        se();
+        // Obtener nombre o correo desde sessionStorage
+        const nombreUsuario = sessionStorage.getItem('email'); // Usar nombre o email, o "Usuario" como fallback
+        // Actualizar el mensaje de bienvenida
+        document.getElementById('welcome-message').innerText = `Bienvenido a las cariñosas, ${nombreUsuario}`;
+        
+        document.getElementById("form-cita").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = sessionStorage.getItem('email');
+            const fechaCita = document.getElementById("fecha").value;
+            crearCita(email, fechaCita);
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            const email = sessionStorage.getItem("email");
+            const tipoUsuario = sessionStorage.getItem("role");
+            if (email && tipoUsuario) {
+                cargarCitas(email, tipoUsuario);
+            } else {
+                console.error("No se encontró el correo o tipo de usuario en sessionStorage.");
+            }
+        });
+        document.addEventListener("click", function(event) {
+            if (event.target.classList.contains("btn-estado")) {
+                const citaId = event.target.getAttribute("data-cita-id");
+                const nuevoEstado = event.target.getAttribute("data-nuevo-estado");
+                if (citaId && nuevoEstado) {
+                    actualizarEstadoCita(citaId, nuevoEstado);
+                }
+            }
+        });
+    </script>
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>
